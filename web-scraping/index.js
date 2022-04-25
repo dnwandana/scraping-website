@@ -36,7 +36,7 @@ async function indexing(url){
   }))
   
   convertToCSV(data)
-  console.log(data);
+  // console.log(data);
 
   browser.close();
 }
@@ -64,4 +64,4 @@ async function scraping(url) {
 }
 
 // scrapper('https://id.quora.com/Bagaimana-cara-mengobati-jerawat-yang-sudah-bertahun-tahun-lamanya')
-indexing('https://id.quora.com/unanswered/Apakah-kamu-toxic-people')
+indexing('https://id.quora.com/Apa-saja-tempat-liburan-hits-terbaru-di-Bali-tahun-2020')
