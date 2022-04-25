@@ -53,23 +53,12 @@ async function scraping(url) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url);
-  // const question = await page.evaluate(() => {
-  //   return Array.from(document.getElementsByClassName('q-box qu-userSelect--text')).map((x) => {
-  //     return x.textContent
-  //   })
-  // })
   const answer = await page.evaluate(() => {
     return Array.from(document.getElementsByClassName('q-box qu-userSelect--text')).map((x) => {
       return x.textContent
     })
   })
-  // if (answer[1].match('Lanjutkan Membaca')) {
-  //   console.log(true);
-  //   console.log({question: answer[0], answer:answer[2]});
-  // } else {
-  //   console.log(false);
-  //   console.log({question: answer[0], answer:answer[1]});
-  // }
+
   console.log(answer);
   browser.close()
 }
