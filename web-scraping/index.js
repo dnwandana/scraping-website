@@ -7,6 +7,31 @@ async function indexing(url) {
   const page = await browser.newPage();
   await page.goto(url);
 
+  const link = await linking(page);
+  const data = [];
+  let newListLink = [];
+  const scrapingData1 = await scraping(link);
+  data.push(...scrapingData1.data);
+  newListLink.push(...scrapingData1.newListLink);
+  let newListUniqueLink = await filterUniqLink(newListLink);
+  newListLink.push(...newListUniqueLink);
+  const scrapingData2 = await scraping(newListUniqueLink);
+  data.push(...scrapingData2.data);
+  newListLink.push(...scrapingData2.newListLink);
+
+  convertToCSV(data);
+
+  browser.close();
+}
+
+const convertToCSV = async (data) => {
+  const csv = new ObjectsToCsv(data);
+
+  // // Save to file:
+  await csv.toDisk(`./results/${Date.now()}test.csv`);
+};
+
+async function linking(page) {
   const link = await page.evaluate(() => {
     return Array.from(
       document.getElementsByClassName(
@@ -49,15 +74,11 @@ async function indexing(url) {
   convertToCSV(data);
   // console.log(data);
 
-  browser.close();
+  return {
+    data,
+    newListLink,
+  };
 }
-
-const convertToCSV = async (data) => {
-  const csv = new ObjectsToCsv(data);
-
-  // Save to file:
-  await csv.toDisk(`./results/${Date.now()}test.csv`);
-};
 
 async function scraping(url) {
   const browser = await puppeteer.launch();
