@@ -96,5 +96,5 @@ async function scraping(link){
 
 
 // scrapper('https://id.quora.com/Bagaimana-cara-mengobati-jerawat-yang-sudah-bertahun-tahun-lamanya')
-indexing('https://id.quora.com/Bagaimana-cara-dokter-mengetahui-seseorang-meninggal-karena-tenggelam-atau-meninggal-dulu-baru-ditenggelamkan')
+indexing('https://id.quora.com/Apa-dampak-buruk-jika-sering-nonton-film-semi')
 // indexing('https://id.quora.com/Bagaimana-cara-menghilangkan-jerawat-bruntusan-dan-mencerahkan-wajah-Saya-sudah-mencoba-memakai-sabun-Kojie-San-dan-produk-lainnya-tapi-tetap-tidak-menunjukkan-hasil')
