@@ -4,7 +4,7 @@ class QandAnswerController {
   static async insertMany(data) {
     try {
       await qAndAnswer.insertMany(data);
-      console.log("Data inserted");
+      console.log(data.length + " Data inserted");
     } catch (error) {
       console.log(error);
     }

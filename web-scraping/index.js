@@ -1,8 +1,12 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs/promises')
 const ObjectsToCsv = require('objects-to-csv');
+require("dotenv/config");
+const QandAnswerController = require("./controllers/qAndAnserController");
+
 async function indexing(url){
   const browser = await puppeteer.launch();
+
   const page = await browser.newPage();
   await page.goto(url, {
     waitUntil: 'load',
@@ -21,9 +25,11 @@ async function indexing(url){
   data.push(...scrapingData2.data);
   newListLink.push(...scrapingData2.newListLink);
 
-  convertToCSV(data)
+  // convertToCSV(data)
+  await QandAnswerController.insertMany(data)
+  console.log("finished");
 
-  browser.close();
+  await browser.close();
 }
 
 const convertToCSV = async (data) => {
@@ -81,10 +87,10 @@ async function scraping(link, browser){
         })
         try {
           if (answer[1].includes('Lanjutkan Membaca')) {
-            console.log(answer[1].includes('Lanjutkan Membaca'));
+            console.log(true);
             data.push({question: answer[0], answer: answer[2]})
           } else {
-            // console.log(false);
+            console.log(false);
             data.push({question: answer[0], answer: answer[1]})
           }
         } catch {
@@ -92,7 +98,6 @@ async function scraping(link, browser){
         }
       }
     } catch (error) {
-      console.log(error);
       console.log("puppeter error");
     }
     
@@ -105,6 +110,15 @@ async function scraping(link, browser){
 }
 
 
-// scrapper('https://id.quora.com/Bagaimana-cara-mengobati-jerawat-yang-sudah-bertahun-tahun-lamanya')
-indexing('https://id.quora.com/Apa-dampak-buruk-jika-sering-nonton-film-semi')
-// indexing('https://id.quora.com/Bagaimana-cara-menghilangkan-jerawat-bruntusan-dan-mencerahkan-wajah-Saya-sudah-mencoba-memakai-sabun-Kojie-San-dan-produk-lainnya-tapi-tetap-tidak-menunjukkan-hasil')
+// async function main(){
+//   const file = await fs.readFile('./linking.txt', {encoding: 'utf-8'});
+//   const arr = file.split('\n')
+//   await Promise.all(arr.map( async (link) => {
+//     if (link.length) {
+//       await indexing(link, browser)
+//     }
+//   })) 
+// }
+
+indexing('https://id.quora.com/Apa-perasaamu-sebagai-lulusan-S-2-tapi-menganggur')
+// main()
